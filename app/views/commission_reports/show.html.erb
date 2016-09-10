@@ -1,0 +1,99 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Employee name:</strong>
+  <%= @commission_report.employee_name %>
+</p>
+
+<p>
+  <strong>Customer name:</strong>
+  <%= @commission_report.customer_name %>
+</p>
+
+<p>
+  <strong>Account manager:</strong>
+  <%= @commission_report.account_manager_id %>
+</p>
+
+<p>
+  <strong>Recruiter:</strong>
+  <%= @commission_report.recruiter_id %>
+</p>
+
+<p>
+  <strong>Support:</strong>
+  <%= @commission_report.support_id %>
+</p>
+
+<p>
+  <strong>Pay rate:</strong>
+  <%= @commission_report.pay_rate %>
+</p>
+
+<p>
+  <strong>Total hours:</strong>
+  <%= @commission_report.total_hours %>
+</p>
+
+<p>
+  <strong>Total gross pay:</strong>
+  <%= @commission_report.total_gross_pay %>
+</p>
+
+<p>
+  <strong>Total bill:</strong>
+  <%= @commission_report.total_bill %>
+</p>
+
+<p>
+  <strong>Am rate:</strong>
+  <%= @commission_report.am_rate %>
+</p>
+
+<p>
+  <strong>Rec rate:</strong>
+  <%= @commission_report.rec_rate %>
+</p>
+
+<p>
+  <strong>Sup rate:</strong>
+  <%= @commission_report.sup_rate %>
+</p>
+
+<p>
+  <strong>Mark up:</strong>
+  <%= @commission_report.mark_up %>
+</p>
+
+<p>
+  <strong>Week ending:</strong>
+  <%= @commission_report.week_ending %>
+</p>
+
+<p>
+  <strong>Week beginning:</strong>
+  <%= @commission_report.week_beginning %>
+</p>
+
+<p>
+  <strong>Revenue:</strong>
+  <%= @commission_report.revenue %>
+</p>
+
+<p>
+  <strong>Am amount:</strong>
+  <%= @commission_report.am_amount %>
+</p>
+
+<p>
+  <strong>Rec amount:</strong>
+  <%= @commission_report.rec_amount %>
+</p>
+
+<p>
+  <strong>Sup amount:</strong>
+  <%= @commission_report.sup_amount %>
+</p>
+
+<%= link_to 'Edit', edit_commission_report_path(@commission_report) %> |
+<%= link_to 'Back', commission_reports_path %>

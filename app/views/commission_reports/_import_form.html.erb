@@ -1,0 +1,16 @@
+<%= form_for @import, url: import_commission_reports_path, multipart: true do |f| %>
+  
+  <h4 class="bold text-center">Import Commissions as CSV</h4>
+   	 <hr>	
+  	<% if @import.errors.any? %>
+  <div class='alert alert-error'>
+  		<% @import.errors.full_messages.each do |msg| %>
+  			<div><%= msg %></div>
+  		<% end %>
+  </div>
+  <% end %>
+  <div class="form-group">
+  	<%= f.file_field :file %>
+  	<%= f.submit "Upload" %>
+  </div>
+<% end %>

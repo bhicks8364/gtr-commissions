@@ -1,0 +1,20 @@
+<h2>Edit <%= @user.name %></h2>
+
+<%= simple_form_for(@user, url: update_user_path(@user), html: { method: :put }) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :first_name, required: true, autofocus: true %>
+    <%= f.input :last_name, required: true %>
+    <%= f.input :email, required: true %>
+    <%= f.input :advanced if @user.recruiter? %>
+    <%= f.input :role, include_blank: false, required: true, collection: ["Recruiter", "Account Manager", "Support", "Admin"], prompt: "Choose your role" %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Update" %>
+  </div>
+<% end %>
+
+
+

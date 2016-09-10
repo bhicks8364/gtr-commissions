@@ -1,0 +1,29 @@
+<%= simple_form_for(@commission_report) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :employee_name %>
+    <%= f.input :customer_name %>
+    <%= f.association :account_manager, collection: User.account_managers %>
+    <%= f.association :recruiter, collection: User.recruiters %>
+    <%= f.association :support, collection: User.support %>
+    <%= f.input :pay_rate %>
+    <%= f.input :total_hours %>
+    <%= f.input :total_gross_pay %>
+    <%= f.input :total_bill %>
+    <%= f.input :am_rate %>
+    <%= f.input :rec_rate %>
+    <%= f.input :sup_rate %>
+    <%= f.input :mark_up %>
+    <%= f.input :week_ending %>
+    <%= f.input :week_beginning %>
+    <%= f.input :revenue %>
+    <%= f.input :am_amount %>
+    <%= f.input :rec_amount %>
+    <%= f.input :sup_amount %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

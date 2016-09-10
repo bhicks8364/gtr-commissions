@@ -1,0 +1,13 @@
+<%= link_to "Export Commission Reports", commission_reports_path(format: :csv), class: "btn btn-default" %>
+<%= link_to "Delete All", reset_all_commission_reports_path, method: :post, data: { disable_with: 'Deleting all commissions...' }, class: "btn btn-default" %>
+<hr>
+<%= render "import_form"  %>
+<%= link_to 'New Commission report', new_commission_report_path %>
+
+<div class="col-md-12 well scroll">
+  <h1> Commission Reports</h1>
+  <%= render "commission_reports/table", commission_reports: @commission_reports %>
+</div>
+
+
+

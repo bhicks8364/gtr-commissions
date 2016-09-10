@@ -1,0 +1,19 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  host:     <%= ENV['IP'] %>
+
+development:
+  <<: *default
+  database: gtr-commissions_development
+
+test:
+  <<: *default
+  database: gtr-commissions_test
+
+production:
+  <<: *default
+  database: gtr-commissions_production

@@ -1,0 +1,1 @@
+json.extract! @commission_report, :id, :employee_name, :customer_name, :account_manager_id, :recruiter_id, :support_id, :pay_rate, :total_hours, :total_gross_pay, :total_bill, :am_rate, :rec_rate, :sup_rate, :mark_up, :week_ending, :week_beginning, :revenue, :am_amount, :rec_amount, :sup_amount, :created_at, :updated_at

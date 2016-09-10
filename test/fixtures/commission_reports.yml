@@ -1,0 +1,73 @@
+# == Schema Information
+#
+# Table name: commission_reports
+#
+#  id                 :integer          not null, primary key
+#  employee_name      :string
+#  customer_name      :string
+#  account_manager_id :integer
+#  recruiter_id       :integer
+#  support_id         :integer
+#  pay_rate           :decimal(, )
+#  total_hours        :decimal(, )
+#  total_gross_pay    :decimal(, )
+#  total_bill         :decimal(, )
+#  am_rate            :decimal(, )
+#  rec_rate           :decimal(, )
+#  sup_rate           :decimal(, )
+#  mark_up            :decimal(, )
+#  week_ending        :date
+#  week_beginning     :date
+#  revenue            :decimal(, )
+#  am_amount          :decimal(, )
+#  rec_amount         :decimal(, )
+#  sup_amount         :decimal(, )
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  start_date         :date
+#  double             :boolean          default(FALSE)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  employee_name: MyString
+  customer_name: MyString
+  account_manager_id: 1
+  recruiter_id: 1
+  support_id: 1
+  pay_rate: 9.99
+  total_hours: 9.99
+  total_gross_pay: 9.99
+  total_bill: 9.99
+  am_rate: 9.99
+  rec_rate: 9.99
+  sup_rate: 9.99
+  mark_up: 9.99
+  week_ending: 2016-07-08
+  week_beginning: 2016-07-08
+  revenue: 9.99
+  am_amount: 9.99
+  rec_amount: 9.99
+  sup_amount: 9.99
+
+two:
+  employee_name: MyString
+  customer_name: MyString
+  account_manager_id: 1
+  recruiter_id: 1
+  support_id: 1
+  pay_rate: 9.99
+  total_hours: 9.99
+  total_gross_pay: 9.99
+  total_bill: 9.99
+  am_rate: 9.99
+  rec_rate: 9.99
+  sup_rate: 9.99
+  mark_up: 9.99
+  week_ending: 2016-07-08
+  week_beginning: 2016-07-08
+  revenue: 9.99
+  am_amount: 9.99
+  rec_amount: 9.99
+  sup_amount: 9.99

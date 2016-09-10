@@ -1,0 +1,10 @@
+<h2>Users</h2>
+<div class="well">
+  <ul>
+    <% User.all.each do |user| %>
+        <li><%= user.id %> | <%= user.email %>
+        <%= link_to "PROFILE", profile_path(user) %></li>
+    <% end %>
+  </ul>
+</div>
+<%= render "import_form"  %>
