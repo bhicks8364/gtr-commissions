@@ -19,13 +19,17 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
+gem "font-awesome-rails"
 gem 'simple_form', "~> 3.2.1"
 gem 'stamp', '~> 0.6.0'
 gem 'annotate', github: 'ctran/annotate_models'
 gem 'arel-helpers', '~> 2.2'
 gem 'chronic'
-gem 'ransack'
 gem 'devise'
+gem "chartkick"
+gem 'groupdate'
+gem 'ransack', '~> 1.7'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks

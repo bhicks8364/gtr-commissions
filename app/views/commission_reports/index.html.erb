@@ -3,11 +3,15 @@
 <hr>
 <%= render "import_form"  %>
 <%= link_to 'New Commission report', new_commission_report_path %>
-
+<%= render "search" %>
 <div class="col-md-12 well scroll">
+  
   <h1> Commission Reports</h1>
   <%= render "commission_reports/table", commission_reports: @commission_reports %>
 </div>
 
 
-
+<div class="col-md-12 well">
+  <h2>Commissions by Mark-Up</h2>
+  <%= column_chart @chart_reports.order(:mark_up).group(:mark_up).count, xtitle: "Mark-Up", ytitle: "Placements" %>
+</div>

@@ -1,0 +1,13 @@
+<%= search_form_for @q do |f| %>
+
+  <%= f.label :employee_name_cont %>
+  <%= f.search_field :employee_name_cont %>
+  <%= f.label :customer_name_cont %>
+  <%= f.search_field :customer_name_cont %>
+
+  <%= f.label :recruiter_username_cont %>
+  <%= f.search_field :recruiter_username_cont %>
+
+
+  <%= f.submit %>
+<% end %>

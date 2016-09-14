@@ -14,8 +14,10 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><%= link_to "Back", :back %></li>
-        <li><%= link_to "Import Users", users_index_path  %></li>
+        <li><%= link_to "<i class='fa fa-arrow-left fa-lg' data-toggle='tooltip' data-placement='bottom' title='BACK'></i>".html_safe, :back %></li>
+        <li><%= link_to "Customers", customers_path %></li>
+        <li><%= link_to "Commission Reports", commission_reports_path %></li>
+        <li><%= link_to "Users", users_index_path  %></li>
         <li><%= link_to "SIGN IN", new_user_session_path if !user_signed_in? %></li>
         <li><%= link_to "SIGN UP", new_user_registration_path if !user_signed_in? %></li>
         <li class="dropdown">

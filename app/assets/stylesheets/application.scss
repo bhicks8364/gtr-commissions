@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+@import "font-awesome";
 @import "bootstrap-sprockets";
 @import "bootstrap";
 .container-fluid {
@@ -26,4 +27,11 @@ a:hover {
 .scroll {
   height: 600px;
   overflow: scroll;
+}
+.scroll800 {
+  height: 800px;
+  overflow: scroll;
+}
+.bold {
+  font-weight: bold;
 }

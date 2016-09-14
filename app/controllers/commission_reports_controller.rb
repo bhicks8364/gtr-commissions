@@ -36,8 +36,10 @@ class CommissionReportsController < ApplicationController
   # GET /commission_reports.json
   def index
     @import  = CommissionReport::Import.new
-    @commission_reports = CommissionReport.all if current_user.admin?
-    @commission_reports = current_user.reports if !current_user.admin?
+    @q = CommissionReport.includes(:account_manager, :recruiter, :support, :customer).ransack(params[:q]) if current_user.admin?
+    @q = current_user.reports.includes(:account_manager, :recruiter, :support, :customer).ransack(params[:q]) if !current_user.admin?
+    @commission_reports = @q.result(distinct: true)
+    @chart_reports = @q.result
     respond_to do |format|
       format.html
       format.csv { send_data @commission_reports.distinct.to_csv, filename: "#{current_user.name}-commissions-#{Time.current}.csv" }
@@ -123,7 +125,7 @@ class CommissionReportsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def commission_report_params
       params.require(:commission_report).permit(:employee_name, :customer_name, :account_manager_id, :recruiter_id, :support_id, 
-                    :pay_rate, :total_hours, :total_gross_pay, :total_bill, :am_rate, :rec_rate, :sup_rate, 
+                    :pay_rate, :total_hours, :total_gross_pay, :total_bill, :am_rate, :rec_rate, :sup_rate, :double,
                     :mark_up, :week_ending, :week_beginning, :revenue, :am_amount, :rec_amount, :sup_amount, :customer_id)
     end
     

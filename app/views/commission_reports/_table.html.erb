@@ -1,4 +1,8 @@
-<%= render "commission_reports/tables/acct_mgr", commission_reports: current_user.reports if current_user.account_manager? %>
-<%= render "commission_reports/tables/rec", commission_reports: current_user.reports if current_user.recruiter? %>
-<%= render "commission_reports/tables/sup", commission_reports: current_user.reports if current_user.recruiting_support? %>
+<% if @user.present? %>
+<%= render "commission_reports/tables/acct_mgr", commission_reports: commission_reports if @user.account_manager? %>
+<%= render "commission_reports/tables/rec", commission_reports: commission_reports if @user.recruiter? %>
+<%= render "commission_reports/tables/sup", commission_reports: commission_reports if @user.recruiting_support? %>
+<% else %>
+<%= render "commission_reports/tables/table", commission_reports: commission_reports %>
+<% end %>
 

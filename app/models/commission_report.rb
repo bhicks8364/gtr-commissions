@@ -79,8 +79,16 @@ class CommissionReport < ActiveRecord::Base
   def calculate
     self.set_revenue
     self.set_amounts
-    self.rec_rate = recruiter_rate
-    self.sup_rate = rec_support_rate
+    if recruiter.present? && recruiter.advanced?
+      self.rec_rate = adv_recruiter_rate
+    else
+      self.rec_rate = recruiter_rate
+    end
+    if double?
+      self.sup_rate = rec_support_rate * 2
+    else
+      self.sup_rate = rec_support_rate
+    end
     self.am_rate = acct_manager_rate
     self.week_beginning = week_ending.beginning_of_week
     self.mark_up = (total_bill / total_gross_pay).round(2)
@@ -89,16 +97,16 @@ class CommissionReport < ActiveRecord::Base
 
 
 
-  def commission_amt
-      revenue / 2
-  end
+  # def commission_amt
+  #     revenue / 2
+  # end
   def profit
       revenue / 2
   end
 
   def commission_total(rate)
-      if commission_amt.present? && rate.present?
-          commission_amt * rate
+      if profit.present? && rate.present?
+          profit * rate
       else
           0
       end
@@ -223,17 +231,12 @@ class CommissionReport < ActiveRecord::Base
   end
   
   def set_amounts
-      self.am_amount = commission_total(acct_manager_rate)
-      self.sup_amount = commission_total(rec_support_rate)
-      if recruiter.present? && recruiter.advanced
-          self.rec_amount = commission_total(adv_recruiter_rate)
-      else
-          self.rec_amount = commission_total(recruiter_rate)
-      end
+    self.am_amount = commission_total(acct_manager_rate)
+    self.sup_amount = commission_total(rec_support_rate)
+    if recruiter.present? && recruiter.advanced
+        self.rec_amount = commission_total(adv_recruiter_rate)
+    else
+        self.rec_amount = commission_total(recruiter_rate)
+    end
   end
-  
-  
-  
-  
-  
 end

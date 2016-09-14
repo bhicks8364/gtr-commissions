@@ -17,6 +17,16 @@ Rails.application.routes.draw do
   root 'main#index'
 
   devise_for :users
+  
+  
+  resources :charts, only: [] do
+    collection do
+      get 'reports_by_markup'
+      get 'reports_by_customer'
+      get 'results_by_country'
+      get 'competitions_by_year'
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

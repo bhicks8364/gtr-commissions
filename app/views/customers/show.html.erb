@@ -1,26 +1,19 @@
-<p id="notice"><%= notice %></p>
 
-<p>
+<h1>
   <strong>Name:</strong>
   <%= @customer.name %>
-</p>
+</h1>
 
 <p>
-  <strong>Address:</strong>
+  <strong>Address:</strong><br>
   <%= @customer.address %>
+  CITY, <%= @customer.state %> <%= @customer.zipcode %>
 </p>
-
-<p>
-  <strong>State:</strong>
-  <%= @customer.state %>
-</p>
-
-<p>
-  <strong>Zipcode:</strong>
-  <%= @customer.zipcode %>
-</p>
-
-<%= link_to 'Edit', edit_customer_path(@customer) %> |
+<div class="col-md-6">
+  <%= pie_chart @customer.commission_reports.order(:mark_up).group(:mark_up).count %>
+</div>
+<h3>Total Bill: <%= number_to_currency(@customer.total_bill(Date.today.end_of_week - 1.week)) %></h3>
+<%= link_to 'Edit', edit_customer_path(@customer) %> <%= link_to 'Destroy', @customer, method: :delete, data: { confirm: 'Are you sure?' } %>
 <%= link_to 'Back', customers_path %>
 
 <div class="col-md-10">

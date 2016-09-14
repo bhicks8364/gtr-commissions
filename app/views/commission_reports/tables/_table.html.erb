@@ -1,50 +1,42 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
+      <th>Week</th>
       <th>Employee name</th>
       <th>Customer name</th>
-      <th>Recruiter</th>
+      <th>Account Manager</th>
       <th>Pay rate</th>
+      <th>Start Date</th>
       <th>Total hours</th>
       <th>Total gross pay</th>
       <th>Total bill</th>
-      <th>Am rate</th>
-      <th>Rec rate</th>
-      <th>Sup rate</th>
       <th>Mark up</th>
-      <th>Week ending</th>
-      <th>Week beginning</th>
       <th>Revenue</th>
       <th>Am amount</th>
       <th>Rec amount</th>
       <th>Sup amount</th>
-      <th colspan="3"></th>
+      <th></th>
     </tr>
   </thead>
 
   <tbody>
     <% commission_reports.order(:customer_name).each do |commission_report| %>
       <tr>
-        <td><%= commission_report.employee_name %></td>
-        <td><%= commission_report.customer_name %></td>
-        <td><%= commission_report.recruiter.try(:name) %></td>
+        <td><%= commission_report.week_beginning.strftime("%x") %> - <%= commission_report.week_ending.strftime("%x") %></td>
+        <td><%= link_to commission_report.employee_name, commission_report %></td>
+        <td><%= link_to commission_report.customer_name, commission_report.customer %></td>
+        <td><% if commission_report.account_manager.present? %><%= link_to commission_report.account_manager.name, profile_path(commission_report.account_manager) %><% else %>Unassign<% end %></td>
         <td><%= number_to_currency commission_report.pay_rate %></td>
+        <td><%= commission_report.start_date.present? ? commission_report.start_date.strftime("%x") : "Unknown" %></td>
         <td><%= number_with_precision(commission_report.total_hours, precision: 2) %></td>
         <td><%= number_to_currency commission_report.total_gross_pay %></td>
         <td><%= number_to_currency commission_report.total_bill %></td>
-        <td><%= commission_report.am_rate %></td>
-        <td><%= commission_report.rec_rate %></td>
-        <td><%= commission_report.sup_rate %></td>
         <td><%= commission_report.mark_up.round(2) %></td>
-        <td><%= commission_report.week_ending.strftime("%B %d, %Y") %></td>
-        <td><%= commission_report.week_beginning.strftime("%B %d, %Y") %></td>
         <td><%= number_to_currency commission_report.revenue %></td>
         <td><%= number_to_currency commission_report.am_amount %></td>
         <td><%= number_to_currency commission_report.rec_amount %></td>
         <td><%= number_to_currency commission_report.sup_amount %></td>
-        <td><%= link_to 'Show', commission_report %></td>
-        <td><%= link_to 'Edit', edit_commission_report_path(commission_report) %></td>
-        <td><%= link_to 'Destroy', commission_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_commission_report_path(commission_report) %> | <%= link_to 'Destroy', commission_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

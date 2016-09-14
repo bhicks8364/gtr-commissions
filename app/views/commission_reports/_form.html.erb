@@ -7,6 +7,7 @@
     <%= f.association :account_manager, collection: User.account_managers %>
     <%= f.association :recruiter, collection: User.recruiters %>
     <%= f.association :support, collection: User.support %>
+    <%= f.input :double %>
     <%= f.input :pay_rate %>
     <%= f.input :total_hours %>
     <%= f.input :total_gross_pay %>

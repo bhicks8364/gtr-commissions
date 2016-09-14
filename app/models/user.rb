@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   scope :admin, -> {where(role: "Admin")}
 
   def account_manager?; role == "Account Manager"; end
-  def admin?; email == "admin@email.com"; end
+  def admin?; role == "Admin"; end
   def recruiter?; role == "Recruiter"; end
   def jonna?; username == "JonnaD"; end
   def lisa?; username == "LisaS"; end
@@ -91,6 +91,16 @@ class User < ActiveRecord::Base
     end
   end
   
+  def customers
+    if account_manager?
+      Customer.joins(:commission_reports).where(CommissionReport[:account_manager_id].eq(id))
+    elsif recruiter?
+      Customer.joins(:commission_reports).where(CommissionReport[:recruiter_id].eq(id))
+    elsif recruiting_support?
+      Customer.joins(:commission_reports).where(CommissionReport[:support_id].eq(id))
+    end
+  end
+  
   def current_report
     reports.current_week.last
   end
@@ -98,19 +108,19 @@ class User < ActiveRecord::Base
   def total_commission_amt
     case role
     when "Account Manager"
-      reports.current_week.sum(:am_amount)
+      reports.sum(:am_amount)
     when "Recruiter"
-      reports.current_week.sum(:rec_amount)
+      reports.sum(:rec_amount)
     when "Recruiting Support"
-      reports.current_week.sum(:sup_amount)
+      reports.sum(:sup_amount)
     end
   end
   
   def total_revenue
-      reports.current_week.sum(:revenue)
+      reports.sum(:revenue)
   end
   def total_hours
-      reports.current_week.sum(:total_hours)
+      reports.sum(:total_hours)
   end
   def total_profit
       total_revenue / 2

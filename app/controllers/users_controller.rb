@@ -46,6 +46,7 @@ class UsersController < ApplicationController
 
   def profile
     @user = User.find(params[:id])
+    @customers = @user.customers
   end
   
   def edit
@@ -69,6 +70,6 @@ class UsersController < ApplicationController
       params.require(:user_import).permit(:file)
   end
   def user_params
-      params.require(:user).permit(:first_name, :last_name, :username, :email, :role)
+      params.require(:user).permit(:first_name, :last_name, :username, :email, :role, :advanced)
   end
 end

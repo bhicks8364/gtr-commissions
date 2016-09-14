@@ -1,10 +1,47 @@
-<h2>Users</h2>
-<div class="well">
-  <ul>
-    <% User.all.each do |user| %>
-        <li><%= user.id %> | <%= user.email %>
-        <%= link_to "PROFILE", profile_path(user) %></li>
-    <% end %>
-  </ul>
+<h2 class="page-header text-center">All Users</h2>
+<div class="col-md-12 well">
+  <%= render "import_form"  %>
 </div>
-<%= render "import_form"  %>
+
+
+<hr>
+  <div class="col-md-4 well">
+    <h2>Account Managers</h2>
+    <ul class="list-group">
+    <% User.account_managers.order(:last_name).each do |user| %>
+      <%= link_to profile_path(user), class: "list-link" do %>
+        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+      <% end %>
+    <% end %>
+    </ul>
+  </div>
+  <div class="col-md-4 well">
+    <h2>Recruiters</h2>
+    <ul class="list-group">
+    <% User.recruiters.each do |user| %>
+      <%= link_to profile_path(user), class: "list-link" do %>
+        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+      <% end %>
+    <% end %>
+    </ul>
+  </div>
+  <div class="col-md-4 well">
+    <h2>Recruiting Supports</h2>
+    <ul class="list-group">
+    <% User.support.each do |user| %>
+      <%= link_to profile_path(user), class: "list-link" do %>
+        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+      <% end %>
+    <% end %>
+    </ul>
+  </div>
+  <div class="col-md-4 well">
+    <h2> Admin</h2>
+    <ul class="list-group">
+    <% User.admin.each do |user| %>
+      <%= link_to profile_path(user), class: "list-link" do %>
+        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+      <% end %>
+    <% end %>
+    </ul>
+  </div>
