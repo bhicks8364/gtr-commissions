@@ -1,13 +1,15 @@
+<div class="col-md-12 well text-center form-inline">
 <%= search_form_for @q do |f| %>
 
-  <%= f.label :employee_name_cont %>
-  <%= f.search_field :employee_name_cont %>
-  <%= f.label :customer_name_cont %>
-  <%= f.search_field :customer_name_cont %>
+  <%= f.label :employee_name_cont, "Employee Name" %>
+  <%= f.search_field :employee_name_cont, class: "form-control", placeholder: "Employee Name" %>
+  <%= f.label :customer_name_cont, "Customer Name"  %>
+  <%= f.search_field :customer_name_start, class: "form-control", placeholder: "Customer Name"  %>
 
-  <%= f.label :recruiter_username_cont %>
-  <%= f.search_field :recruiter_username_cont %>
+  <%= f.label :recruiter_username_cont, "Recruiter Name"  %>
+  <%= f.search_field :recruiter_username_or_recruiter_first_name_or_recruiter_last_name_cont, class: "form-control", placeholder: "Recruiter Name"  %>
 
 
   <%= f.submit %>
 <% end %>
+</div>

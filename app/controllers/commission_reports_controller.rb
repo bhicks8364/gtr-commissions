@@ -106,6 +106,11 @@ class CommissionReportsController < ApplicationController
     redirect_to commission_reports_path, notice: "Successfully deleted all commission records."
   end
   
+  def calculate_all
+    CommissionReport.calculate_all!
+    redirect_to commission_reports_path, notice: "Successfully updated all commission records."
+  end
+  
   # DELETE /commission_reports/1
   # DELETE /commission_reports/1.json
   def destroy

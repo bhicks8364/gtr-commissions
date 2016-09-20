@@ -1,0 +1,10 @@
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Recruiters <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <% User.recruiters.order(:last_name).each do |user| %>
+      <%= link_to profile_path(user), class: "list-link" do %>
+        <li><i class='fa fa-user' data-toggle='tooltip' data-placement='bottom' title='<%= user.username %>'></i> &nbsp; <%= user.name %> </li>
+      <% end %>
+    <% end %>
+  </ul>
+</li>

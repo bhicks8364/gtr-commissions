@@ -55,7 +55,7 @@ class CommissionReport < ActiveRecord::Base
   
   #  EXPORT TO CSV
   def self.to_csv
-    attributes = %w{ customer_name employee_name total_hours total_bill total_gross_pay mark_up revenue profit am_amount rec_amount sup_amount}
+    attributes = %w{ customer_name employee_name total_hours total_bill total_gross_pay mark_up revenue profit am_amount rec_amount sup_amount start_date pay_rate}
     CSV.generate(headers: true) do |csv|
     csv << attributes
     
@@ -69,7 +69,8 @@ class CommissionReport < ActiveRecord::Base
     self.revenue = total_bill - total_gross_pay
   end
   
-  def self.calculate_all
+  
+  def self.calculate_all!
     all.each do |commission|
       commission.calculate
       commission.save
@@ -77,8 +78,7 @@ class CommissionReport < ActiveRecord::Base
   end
   
   def calculate
-    self.set_revenue
-    self.set_amounts
+    set_revenue
     if recruiter.present? && recruiter.advanced?
       self.rec_rate = adv_recruiter_rate
     else
@@ -90,31 +90,25 @@ class CommissionReport < ActiveRecord::Base
       self.sup_rate = rec_support_rate
     end
     self.am_rate = acct_manager_rate
+    set_amounts
     self.week_beginning = week_ending.beginning_of_week
     self.mark_up = (total_bill / total_gross_pay).round(2)
     self.customer = Customer.find_or_create_by(name: customer_name)
   end
 
-
-
-  # def commission_amt
-  #     revenue / 2
-  # end
   def profit
-      revenue / 2
+    revenue / 2
   end
 
   def commission_total(rate)
-      if profit.present? && rate.present?
-          profit * rate
-      else
-          0
-      end
+    if profit.present? && rate.present?
+      profit * rate
+    else
+      0
+    end
   end
 
 
-
-  
   def recruiter_rate
       if recruiter.present? && recruiter.house?
           0.02
@@ -135,18 +129,18 @@ class CommissionReport < ActiveRecord::Base
           end
       end
   end
+  
   def rec_support_rate
       case pay_rate
-      when (0...9.99)
-          0.025
-      when (10...15.99)
-          0.05
-      when (16...21.99)
-          0.075
-      when (22...300)
-          0.1
+      when (0...10)
+          0.01
+      when (10.01...12.00)
+          0.02
+      when (12.01...300)
+          0.03
       end
   end
+  
   def adv_recruiter_rate
       if recruiter.reports.current_week.sum(:total_hours) <= 1000
           case pay_rate
@@ -194,7 +188,7 @@ class CommissionReport < ActiveRecord::Base
           end
       end
   end
-  def special_rate
+  def special_rec_rate
       case pay_rate
       when (0...9.99)
           0.025
@@ -208,10 +202,12 @@ class CommissionReport < ActiveRecord::Base
   end
   
   def acct_manager_rate
+    # def acct_manager_rate(com_reports) # Feeling like this is how it should be... not sure.
     if account_manager.present?
       total_hrs = account_manager.reports.current_week.sum(:total_hours)
-      if account_manager.jonna?
-          special_rate
+      # total_hrs = com_reports.sum(:total_hours)
+      if account_manager.special?
+          special_rec_rate
       elsif total_hrs < 1000
           0.025
       elsif total_hrs > 1000 && total_hrs < 2000
@@ -234,9 +230,9 @@ class CommissionReport < ActiveRecord::Base
     self.am_amount = commission_total(acct_manager_rate)
     self.sup_amount = commission_total(rec_support_rate)
     if recruiter.present? && recruiter.advanced
-        self.rec_amount = commission_total(adv_recruiter_rate)
+      self.rec_amount = commission_total(adv_recruiter_rate)
     else
-        self.rec_amount = commission_total(recruiter_rate)
+      self.rec_amount = commission_total(recruiter_rate)
     end
   end
 end

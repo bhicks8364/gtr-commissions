@@ -17,6 +17,7 @@
   <tbody>
     <% commission_reports.each do |commission_report| %>
       <tr class="<%= commission_report.double? ? "bg-success bold" : "bg-warning" %>">
+        <td><%= link_to "Edit", edit_commission_report_path(commission_report) %></td>
         <td><%= link_to commission_report.employee_name, commission_report %></td>
         <td><%= link_to commission_report.customer_name, commission_report.customer %></td>
         <td><%= number_to_currency commission_report.pay_rate %></td>

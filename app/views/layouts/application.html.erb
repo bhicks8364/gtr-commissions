@@ -10,6 +10,7 @@
   <body>
   
     <%= render "layouts/navbar" %>
+    <%= link_to "<i class='fa fa-arrow-left fa-lg' data-toggle='tooltip' data-placement='bottom' title='BACK'></i>".html_safe, :back, class: "navbar-brand back-btn" if user_signed_in? %>
     <%= render "layouts/alert" if alert %>
     <%= render "layouts/notice" if notice %>
     

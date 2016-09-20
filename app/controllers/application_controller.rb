@@ -9,4 +9,14 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :role, :advanced])
   end
+  
+  def after_sign_in_path_for(resource)
+    if params[:redirect_to].present?
+      store_location_for(resource, params[:redirect_to])
+    elsif request.referer == new_session_url
+      super
+    else
+      stored_location_for(resource) || request.referer || root_path
+    end
+  end
 end

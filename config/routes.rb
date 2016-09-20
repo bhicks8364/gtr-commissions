@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :commission_reports do
     collection do
       post :import
-      post :calculate
+      post :calculate_all
       post :remove_negatives
       post :reset_all
     end

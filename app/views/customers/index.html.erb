@@ -1,7 +1,8 @@
-<p id="notice"><%= notice %></p>
 
 <h1>All Customers</h1>
-<div class="text-right"><%= link_to 'New Customer', new_customer_path, class: "btn btn-default" %></div>
+<div class="text-right"><%= link_to 'New Customer', new_customer_path, class: "btn btn-default" %>
+  
+</div>
 <hr>
 <div class="col-md-12 table-responsive scroll">
   <table class="table table-bordered table-hover">
@@ -17,7 +18,7 @@
       <% @customers.each do |customer| %>
         <tr>
           <td><%=link_to customer.name, customer %></td>
-          <td><% if customer.commission_reports.any? %> <%= link_to customer.account_manager.name, profile_path(customer.account_manager) %><% else %> Inactive <% end %> </td>
+          <td><% if customer.account_manager.present? %> <%= link_to customer.account_manager.name, profile_path(customer.account_manager) %><% else %><%= customer.commission_reports.any? ? "Unassigned" : "Inactive" %> <% end %> </td>
           <td><%= number_to_currency(customer.total_bill(Date.today.end_of_week - 1.week)) %></td>
           <td></td>
         </tr>

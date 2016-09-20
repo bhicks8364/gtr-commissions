@@ -32,10 +32,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
   
   scope :account_managers, -> { where(User[:role].eq("Account Manager")) }
-  scope :recruiters, -> { where(User[:role].eq("Recruiter")) }
+  scope :recruiters, -> { where(User[:role].eq("Recruiter").and(User[:username].not_eq("South").or(User[:username].not_eq("North").or(User[:username].not_eq("NorthWest"))))) }
   scope :support, -> { where(User[:role].eq("Recruiting Support")) }
   scope :admin, -> { where(User[:role].eq("Admin")) }
-  scope :admin, -> {where(role: "Admin")}
 
   def account_manager?; role == "Account Manager"; end
   def admin?; role == "Admin"; end
@@ -62,10 +61,28 @@ class User < ActiveRecord::Base
     end
   end
   
+  def special?
+    case username
+    when "JonnaD"
+        true
+    when "JustinB"
+        true
+    when "BTowner"
+        true
+    when "KristenM"
+        true
+    when "ZacharyP"
+        true
+    else
+        false
+    end
+  end
+  
   # IMPORT FROM CSV
   def self.assign_from_row(row)
     user = User.new(email: row[:email], password: "111111", password_confirmation: "111111")
     user.assign_attributes row.to_hash.slice(:first_name, :last_name, :username, :role, :email)
+    user.advanced = row[:advanced].starts_with?("y") ? true : false
     user
   end
 
@@ -88,6 +105,8 @@ class User < ActiveRecord::Base
       CommissionReport.includes(:account_manager, :recruiter, :support, :customer).where(recruiter_id: id)
     elsif recruiting_support?
       CommissionReport.includes(:account_manager, :recruiter, :support, :customer).where(support_id: id)
+    else
+      CommissionReport.none
     end
   end
   
@@ -98,6 +117,8 @@ class User < ActiveRecord::Base
       Customer.joins(:commission_reports).where(CommissionReport[:recruiter_id].eq(id))
     elsif recruiting_support?
       Customer.joins(:commission_reports).where(CommissionReport[:support_id].eq(id))
+    else
+      Customer.none
     end
   end
   

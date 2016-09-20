@@ -12,12 +12,14 @@
 #
 
 class CustomersController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
   # GET /customers
   # GET /customers.json
   def index
-    @customers = Customer.includes(:commission_reports).all
+    @customers = Customer.includes(:commission_reports).all if current_user.admin?
+    @customers = current_user.customers.distinct.order(:name) if !current_user.admin?
   end
 
   # GET /customers/1

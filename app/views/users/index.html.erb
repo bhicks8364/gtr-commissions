@@ -8,9 +8,9 @@
   <div class="col-md-4 well">
     <h2>Account Managers</h2>
     <ul class="list-group">
-    <% User.account_managers.order(:last_name).each do |user| %>
+    <% User.account_managers.order(:username).each do |user| %>
       <%= link_to profile_path(user), class: "list-link" do %>
-        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+        <li class="list-group-item <%= user.advanced ? "list-group-item-success" : "list-group-item-info"%>"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.username %></span></li>
       <% end %>
     <% end %>
     </ul>
@@ -18,9 +18,9 @@
   <div class="col-md-4 well">
     <h2>Recruiters</h2>
     <ul class="list-group">
-    <% User.recruiters.each do |user| %>
+    <% User.recruiters.order(:username).each do |user| %>
       <%= link_to profile_path(user), class: "list-link" do %>
-        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+        <li class="list-group-item <%= user.advanced ? "list-group-item-success" : "list-group-item-info"%>"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.username %></span></li>
       <% end %>
     <% end %>
     </ul>
@@ -28,9 +28,9 @@
   <div class="col-md-4 well">
     <h2>Recruiting Supports</h2>
     <ul class="list-group">
-    <% User.support.each do |user| %>
+    <% User.support.order(:username).each do |user| %>
       <%= link_to profile_path(user), class: "list-link" do %>
-        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+        <li class="list-group-item <%= user.advanced ? "list-group-item-success" : "list-group-item-info"%>"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.username %></span></li>
       <% end %>
     <% end %>
     </ul>
@@ -38,9 +38,9 @@
   <div class="col-md-4 well">
     <h2> Admin</h2>
     <ul class="list-group">
-    <% User.admin.each do |user| %>
+    <% User.order(:username).admin.each do |user| %>
       <%= link_to profile_path(user), class: "list-link" do %>
-        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.email %></span></li>
+        <li class="list-group-item"><%= user.id %> --- <%= user.name %> <span class="pull-right"><%= user.username %></span></li>
       <% end %>
     <% end %>
     </ul>

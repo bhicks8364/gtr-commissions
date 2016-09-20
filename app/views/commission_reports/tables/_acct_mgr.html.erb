@@ -3,7 +3,7 @@
     <tr>
       <th>Employee name</th>
       <th>Customer name</th>
-      <th>Account Manager</th>
+      <th>Recruiter</th>
       <th>Pay rate</th>
       <th>Total hours</th>
       <th>Total gross pay</th>
@@ -20,16 +20,16 @@
   <tbody>
     <% commission_reports.each do |commission_report| %>
       <tr>
-        <td><%= link_to commission_report.employee_name, commission_report %></td>
+        <td><%=commission_report.id%> - <%= link_to commission_report.employee_name, commission_report %></td>
         <td><%= link_to commission_report.customer_name, commission_report.customer %></td>
-        <td><%= commission_report.account_manager.try(:name) %></td>
+        <td><%= commission_report.recruiter.try(:name) %></td>
         <td><%= number_to_currency commission_report.pay_rate %></td>
         <td><%= number_with_precision(commission_report.total_hours, precision: 2) %></td>
         <td><%= number_to_currency commission_report.total_gross_pay %></td>
         <td><%= number_to_currency commission_report.total_bill %></td>
         <td><%= commission_report.mark_up.round(2) %></td>
-        <td><%= commission_report.week_beginning.strftime("%B %d, %Y") %></td>
-        <td><%= commission_report.week_ending.strftime("%B %d, %Y") %></td>
+        <td><%= commission_report.week_beginning.strftime("%x") %></td>
+        <td><%= commission_report.week_ending.strftime("%x") %></td>
         <td><%= number_to_currency commission_report.revenue %></td>
         <td><%= commission_report.acct_manager_rate %></td>
         <td><%= number_to_currency commission_report.am_amount %></td>
