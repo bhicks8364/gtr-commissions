@@ -40,10 +40,22 @@ class CommissionReportsController < ApplicationController
     @q = current_user.reports.includes(:account_manager, :recruiter, :support, :customer).ransack(params[:q]) if !current_user.admin?
     @commission_reports = @q.result(distinct: true)
     @chart_reports = @q.result
+    @week_ending = params[:week_ending]
     respond_to do |format|
       format.html
       format.csv { send_data @commission_reports.distinct.to_csv, filename: "#{current_user.name}-commissions-#{Time.current}.csv" }
     end 
+  end
+  
+  def search
+    # index
+    @import  = CommissionReport::Import.new
+    @week_ending = params[:week_ending]
+    @q = CommissionReport.includes(:account_manager, :recruiter, :support, :customer).ransack(params[:q]) if current_user.admin?
+    @q = current_user.reports.includes(:account_manager, :recruiter, :support, :customer).ransack(params[:q]) if !current_user.admin?
+    @commission_reports = @q.result(distinct: true)
+    @chart_reports = @q.result
+    render :index
   end
 
   # GET /commission_reports/1
@@ -107,7 +119,8 @@ class CommissionReportsController < ApplicationController
   end
   
   def calculate_all
-    CommissionReport.calculate_all!
+    CommissionReport.all.map(&:save)
+    # CommissionReport.calculate_all!
     redirect_to commission_reports_path, notice: "Successfully updated all commission records."
   end
   

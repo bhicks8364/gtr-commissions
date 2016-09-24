@@ -1,18 +1,24 @@
-<%= link_to "Export Commission Reports", commission_reports_path(format: :csv), class: "btn btn-default" %>
+<%= link_to "Export Commission Reports", commission_reports_path(format: :csv), class: "btn btn-default"  if current_user.admin?  %>
 <%= link_to "Delete All", reset_all_commission_reports_path, method: :post, data: {confirm: 'Are you sure you want to delete all commission reports?', disable_with: 'Deleting all commissions...' }, class: "btn btn-default" if current_user.admin? %>
 <hr>
 <%= render "import_form" if current_user.admin?  %>
-<%= link_to 'New Commission report', new_commission_report_path, class: "btn btn-default" %>
-<%= link_to 'Recalculate All', calculate_all_commission_reports_path, method: :post, data: { disable_with: 'Updating all commissions...' }, class: "btn btn-default" %>
-<%= render "search" %>
+<%= link_to 'New Commission report', new_commission_report_path, class: "btn btn-default" if current_user.admin? %>
+<%= link_to 'Recalculate All', calculate_all_commission_reports_path, method: :post, data: { disable_with: 'Updating all commissions...' }, class: "btn btn-default"  if current_user.admin?  %>
+<div class="col-md-12 well">
+  <%= render "search" %>
+  <hr>
+  <%= link_to "Clear", commission_reports_path, class: "btn btn-danger btn-lg pull-right" %>
+</div>
+
+
 <div class="col-md-12 well scroll">
-  
-  <h1> Commission Reports</h1>
+  <h1> Commission Reports <span class="pull-right text-muted"><h1><%= @week_ending ? @week_ending : "Showing All Commissions" %></h1></span></h1>
   <%= render "commission_reports/table", commission_reports: @commission_reports %>
 </div>
 
 
 <div class="col-md-12 well">
+  
   <h2>Commissions by Mark-Up</h2>
-  <%= pie_chart @chart_reports.order(:mark_up).group(:mark_up).count, xtitle: "Mark-Up", ytitle: "Placements" %>
+  <%= pie_chart @chart_reports.count, xtitle: "Mark-Up", ytitle: "Placements" %>
 </div>

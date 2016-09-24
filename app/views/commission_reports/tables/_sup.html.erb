@@ -1,6 +1,7 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
+      <th></th>
       <th>Employee</th>
       <th>Customer</th>
       <th>Pay Rate</th>
@@ -27,7 +28,7 @@
         <td><%= commission_report.mark_up.round(2) %></td>
         <td class="text-center"><%= commission_report.week_beginning.strftime("%x") %> - <%= commission_report.week_ending.strftime("%x") %></td>
         <td><%= number_to_currency commission_report.revenue %></td>
-        <td><%= number_to_currency commission_report.sup_amount %></td>
+        <td><%= number_to_currency commission_report.sup_amount %> (<%= number_to_percentage(commission_report.sup_rate, precision: 2)%>)</td>
       </tr>
     <% end %>
   </tbody>

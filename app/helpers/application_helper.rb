@@ -7,6 +7,11 @@ module ApplicationHelper
       link_to "#{name}".html_safe, url
     end
   end
+  
+  def login_options
+    @redirect_path ? {redirect_to: @redirect_path} : {}
+  end
+  
 end
 
 

@@ -4,18 +4,25 @@
   <%= link_to "SIGN UP", new_user_registration_path, class: "btn btn-default" %>
   
   <% else %>
-      <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: "btn btn-default" %>
-      <hr>
-      <%= link_to "Commissions", commission_reports_path, class: "btn btn-default" %>
-      <hr>
-      <%= link_to "Export Commission Reports", commission_reports_path(format: :csv), class: "btn btn-default" %>
-      <hr>
-      <hr>
-      <div class="col-md-12">
-        
-        
-      </div>
-      
+    <%= link_to "SIGN OUT", destroy_user_session_path, method: :delete, class: "btn btn-default" %>
+    <hr>
+    <%= link_to "Commissions", commission_reports_path, class: "btn btn-default" %>
+    <hr>
+    <%= link_to "Export Commission Reports", commission_reports_path(format: :csv), class: "btn btn-default" %>
+    <hr>
+    <%= render "commission_reports/search" %>
+  <div class="col-md-12 well table-responsive scroll800">
+    <%= render "commission_reports/tables/compact", commission_reports: @commission_reports.order(:employee_name) %>
+  </div>
+  <hr>
+  <div class="col-md-12">
+    <%= column_chart @chart_reports.order(:pay_rate).group(:pay_rate).count, xtitle: "Pay Rate", ytitle: "Placements" %>
+  </div>
+  <div class="col-md-12 well">
+    <h2>Commissions by Mark-Up</h2>
+    <%= column_chart @chart_reports.order(:mark_up).group(:mark_up).count, xtitle: "Mark-Up", ytitle: "Placements" %>
+  </div>
+
   <% end %>
   
   

@@ -126,25 +126,33 @@ class User < ActiveRecord::Base
     reports.current_week.last
   end
   
-  def total_commission_amt
+  def total_commission_amt(com_reports)
     case role
     when "Account Manager"
-      reports.sum(:am_amount)
+      com_reports.sum(:am_amount)
     when "Recruiter"
-      reports.sum(:rec_amount)
+      com_reports.sum(:rec_amount)
     when "Recruiting Support"
-      reports.sum(:sup_amount)
+      com_reports.sum(:sup_amount)
     end
   end
   
-  def total_revenue
-      reports.sum(:revenue)
+  def total_revenue(com_reports)
+      com_reports.sum(:revenue)
   end
-  def total_hours
-      reports.sum(:total_hours)
+  def total_hours(com_reports)
+      com_reports.sum(:total_hours)
   end
-  def total_profit
-      total_revenue / 2
+  def total_profit(com_reports)
+      total_revenue(com_reports) / 2
+  end
+  
+  def last_commission_week
+    if reports.order(:week_ending).last.present?
+      reports.order(:week_ending).last.week_ending.stamp("12/18/1989")
+    else
+      "No Records Found"
+    end
   end
   
 end

@@ -47,6 +47,8 @@ class UsersController < ApplicationController
   def profile
     @user = User.find(params[:id])
     @customers = @user.customers
+    @commission_reports = @user.reports if !@user.admin?
+    @commission_reports = CommissionReport.includes(:account_manager, :recruiter, :support, :customer).all if @user.admin?
   end
   
   def edit

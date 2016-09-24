@@ -1,0 +1,31 @@
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th><%= sort_link(@q, :customer_name) %></th>
+      <th><%= sort_link(@q, :employee_name) %></th>
+      <th><%= sort_link(@q, :total_hours) %></th>
+      <th><%= sort_link(@q, :total_gross_pay) %></th>
+      <th><%= sort_link(@q, :total_bill) %></th>
+      <th><%= sort_link(@q, :mark_up) %></th>
+      <th><%= sort_link(@q, :revenue) %></th>
+      <th><%= sort_link(@q, :am_amount) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% commission_reports.each do |commission_report| %>
+      <tr>
+        <td><%= link_to commission_report.customer_name, commission_report.customer %></td>
+        <td><%=commission_report.id%> - <%= link_to commission_report.employee_name, commission_report %></td>
+        <td><%= number_with_precision(commission_report.total_hours, precision: 2) %></td>
+        <td><%= number_to_currency commission_report.total_gross_pay %></td>
+        <td><%= number_to_currency commission_report.total_bill %></td>
+        <td><%= commission_report.mark_up.round(2) %></td>
+        <td><%= number_to_currency commission_report.revenue %></td>
+        <td><%= number_to_currency commission_report.am_amount %> (<%= number_to_percentage(commission_report.acct_manager_rate, precision: 2) %>)</td>
+        <td><%= link_to 'Edit', edit_commission_report_path(commission_report) %> | <%= link_to 'Destroy', commission_report, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

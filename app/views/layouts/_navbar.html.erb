@@ -30,7 +30,7 @@
         
         <% else %>
         <ul class="nav navbar-nav">
-          <li><%= link_to "SIGN IN", new_user_session_path %></li>
+          <li><%= link_to "SIGN IN", new_user_session_path(redirect_to: request.path) %></li>
           <li><%= link_to "SIGN UP", new_user_registration_path %></li>
         </ul>
         <% end %>

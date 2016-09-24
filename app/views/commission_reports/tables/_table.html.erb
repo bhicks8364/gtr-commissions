@@ -1,20 +1,20 @@
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
-      <th>Week</th>
-      <th>Employee name</th>
-      <th>Customer name</th>
-      <th>Account Manager</th>
-      <th>Pay rate</th>
-      <th>Start Date</th>
-      <th>Total hours</th>
-      <th>Total gross pay</th>
-      <th>Total bill</th>
-      <th>Mark up</th>
-      <th>Revenue</th>
-      <th>Am amount</th>
-      <th>Rec amount</th>
-      <th>Sup amount</th>
+      <th><%= @q.present? ? sort_link(@q, :week, 'Week') : "Week" %></th>
+      <th><%= sort_link(@q, :employee_name) %></th>
+      <th><%= sort_link(@q, :customer_name) %></th>
+      <th><%= sort_link(@q, :account_manager) %></th>
+      <th><%= sort_link(@q, :pay_rate) %></th>
+      <th><%= sort_link(@q, :start_date) %></th>
+      <th><%= sort_link(@q, :total_hours) %></th>
+      <th><%= sort_link(@q, :total_gross_pay) %></th>
+      <th><%= sort_link(@q, :total_bill) %></th>
+      <th><%= sort_link(@q, :mark_up) %></th>
+      <th><%= sort_link(@q, :revenue) %></th>
+      <th><%= sort_link(@q, :am_amount) %></th>
+      <th><%= sort_link(@q, :rec_amount) %></th>
+      <th><%= sort_link(@q, :sup_amount) %></th>
       <th></th>
     </tr>
   </thead>

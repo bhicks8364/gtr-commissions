@@ -1,23 +1,23 @@
 <h1><%= @user.name %> <small> <%= @user.role %></small></h1>
 <h3><%= @user.email %></h3>
-<h3><%= @user.reports.count %></h3>
-<div class="col-md-4"><h2>Commission: <%= number_to_currency @user.total_commission_amt %></h2></div>
-<div class="col-md-4"><h2>Hours: <%= number_with_delimiter(@user.total_hours, delimiter: ",") %></h2></div>
-<div class="col-md-4"><h2>Revenue: <%= number_to_currency @user.total_revenue %></h2></div>
+<h3><%= @user.last_commission_week %></h3>
+<div class="col-md-4"><h2>Commission: <%= number_to_currency @user.total_commission_amt(@commission_reports.current_week) %></h2></div>
+<div class="col-md-4"><h2>Hours: <%= number_with_delimiter(@user.total_hours(@commission_reports.current_week), delimiter: ",") %></h2></div>
+<div class="col-md-4"><h2>Revenue: <%= number_to_currency @user.total_revenue(@commission_reports.current_week) %></h2></div>
 <%= link_to "Edit", edit_user_path(@user), class: "btn btn-default" %>
 <div class="col-md-12 well table-responsive scroll800">
-  <%= render "commission_reports/table", commission_reports: @user.reports.order(:customer_name) %>
+  <%= render "commission_reports/table", commission_reports: @commission_reports.order(:employee_name) %>
 </div>
 <div class="col-md-12 well">
   <h2>By Mark Up</h2>
-  <%= column_chart @user.reports.order(:mark_up).group(:mark_up).count, xtitle: "Mark-Up", ytitle: "Placements" %>
+  <%= column_chart @commission_reports.order(:mark_up).group(:mark_up).count, xtitle: "Mark-Up", ytitle: "Placements" %>
 </div>
 <div class="col-md-12 well">
   <h2>Placements By Company</h2>
-  <%= column_chart @user.reports.group(:customer_name).count, xtitle: "Customer", ytitle: "Placements" %>
+  <%= column_chart @commission_reports.group(:customer_name).count, xtitle: "Customer", ytitle: "Placements" %>
 </div>
 
 <div class="col-md-12 well">
   <h2>By Pay Rate</h2>
-  <%= column_chart @user.reports.order(:pay_rate).group(:pay_rate).count, xtitle: "Pay Rate", ytitle: "Placements" %>
+  <%= column_chart @commission_reports.order(:pay_rate).group(:pay_rate).count, xtitle: "Pay Rate", ytitle: "Placements" %>
 </div>

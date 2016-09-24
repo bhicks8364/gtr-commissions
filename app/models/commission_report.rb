@@ -45,6 +45,9 @@ class CommissionReport < ActiveRecord::Base
     commission = CommissionReport.new(employee_name: row[:employee])
     w = Chronic.parse(row[:week_ending]).present? ? Chronic.parse(row[:week_ending]).end_of_week : Date.current.end_of_week - 1.week
     commission.assign_attributes row.to_hash.slice(:customer_name, :account_manager, :recruiter, :recruiting_support, :pay_rate, :total_hours, :total_gross_pay, :total_bill, :start_date)
+    if row[:double].starts_with?("y")
+      commission.double = true
+    end
     commission.account_manager = User.find_or_create_by(username: row[:created_by], role: "Account Manager")
     commission.recruiter = User.find_or_create_by(username: row[:assigned_by], role: "Recruiter")
     commission.support = User.find_or_create_by(username: row[:serviced_by], role: "Recruiting Support")
@@ -84,6 +87,7 @@ class CommissionReport < ActiveRecord::Base
     else
       self.rec_rate = recruiter_rate
     end
+    
     if double?
       self.sup_rate = rec_support_rate * 2
     else
@@ -132,12 +136,12 @@ class CommissionReport < ActiveRecord::Base
   
   def rec_support_rate
       case pay_rate
-      when (0...10)
-          0.01
-      when (10.01...12.00)
-          0.02
-      when (12.01...300)
-          0.03
+      when (0..10.00)
+        0.01
+      when (10.01..12.00)
+        0.02
+      when (12.01..300)
+        0.03
       end
   end
   
@@ -228,7 +232,7 @@ class CommissionReport < ActiveRecord::Base
   
   def set_amounts
     self.am_amount = commission_total(acct_manager_rate)
-    self.sup_amount = commission_total(rec_support_rate)
+    self.sup_amount = commission_total(sup_rate)
     if recruiter.present? && recruiter.advanced
       self.rec_amount = commission_total(adv_recruiter_rate)
     else

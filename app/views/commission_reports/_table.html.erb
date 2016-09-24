@@ -2,6 +2,7 @@
 <%= render "commission_reports/tables/acct_mgr", commission_reports: commission_reports if @user.account_manager? %>
 <%= render "commission_reports/tables/rec", commission_reports: commission_reports if @user.recruiter? %>
 <%= render "commission_reports/tables/sup", commission_reports: commission_reports if @user.recruiting_support? %>
+<%= render "commission_reports/tables/table", commission_reports: commission_reports if @user.admin? %>
 <% else %>
 <%= render "commission_reports/tables/table", commission_reports: commission_reports %>
 <% end %>
